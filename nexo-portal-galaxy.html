@@ -1,0 +1,573 @@
+<!doctype html><html lang="en" dir="ltr"><head>
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script>
+(function () {
+    // Design-ui pages are single compositions, so the whole body is editable.
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+
+    // Credit badge with idle-fade. Hover devices only.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+
+    function init() {
+        markEditable();
+        initChromeUI();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEXO | Technology & Design</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{
+  --dark:#060312;
+  --navy:#120A32;
+  --wine:#4A103E;
+  --pink:#8C3A70;
+  --fuchsia:#C44B99;
+  --gold:#9B6A12;
+  --amber:#DB9F34;
+  --surface:#0A0620;
+  --surface-2:#0E0928;
+  --surface-3:#161038;
+  --text-primary:#F0EAF8;
+  --text-secondary:#B8A8D4;
+  --text-muted:#6B5A85;
+  --line:rgba(140,58,112,.2);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --glow-pink:rgba(196,75,153,.4);
+  --glow-purple:rgba(88,40,180,.35);
+  --glow-amber:rgba(219,159,52,.25)
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--text-primary);font:16px/1.55 'Space Grotesk','IBM Plex Sans Arabic',sans-serif;overflow-x:hidden}
+body.ar{font-family:'Noto Kufi Arabic','IBM Plex Sans Arabic',sans-serif;line-height:2}
+body.ar h1,body.ar h2,body.ar h3{letter-spacing:-.03em;font-weight:600}
+body.ar .eyebrow,body.ar .label,body.ar .tag,body.ar .top,body.ar nav,body.ar .project small{letter-spacing:0}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+/* ===== GALAXY CANVAS ===== */
+#galaxy-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ===== NEBULA GLOWS ===== */
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.nebula-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.6}
+.nb-1{width:1000px;height:800px;top:-15%;left:20%;background:radial-gradient(ellipse,var(--glow-purple) 0%,transparent 70%);animation:nebDrift1 20s ease-in-out infinite}
+.nb-2{width:800px;height:900px;bottom:-20%;right:-10%;background:radial-gradient(ellipse,var(--glow-pink) 0%,transparent 65%);animation:nebDrift2 25s ease-in-out infinite}
+.nb-3{width:600px;height:600px;top:50%;left:-15%;background:radial-gradient(ellipse,rgba(219,159,52,.15) 0%,transparent 70%);animation:nebDrift3 18s ease-in-out infinite}
+.nb-4{width:500px;height:500px;top:20%;right:10%;background:radial-gradient(ellipse,rgba(74,16,62,.4) 0%,transparent 60%);animation:nebDrift4 22s ease-in-out infinite}
+@keyframes nebDrift1{0%,100%{transform:translate(0,0) scale(1) rotate(0deg)}50%{transform:translate(80px,50px) scale(1.15) rotate(5deg)}}
+@keyframes nebDrift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-40px) scale(1.1)}}
+@keyframes nebDrift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,60px) scale(.9)}}
+@keyframes nebDrift4{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-30px,40px) rotate(-8deg)}}
+
+/* ===== SPARKLE PARTICLES (CSS) ===== */
+.sparkles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.sparkle{position:absolute;width:3px;height:3px;border-radius:50%;animation:twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s)}
+.sparkle.gold{background:var(--amber);box-shadow:0 0 6px var(--amber),0 0 12px rgba(219,159,52,.5)}
+.sparkle.pink{background:var(--fuchsia);box-shadow:0 0 6px var(--fuchsia),0 0 12px rgba(196,75,153,.5)}
+.sparkle.white{background:#e8dff8;box-shadow:0 0 4px #e8dff8,0 0 8px rgba(232,223,248,.4)}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.5)}50%{opacity:1;transform:scale(1.2)}}
+
+/* ===== SHOOTING STARS ===== */
+.shooting-star{position:fixed;z-index:1;pointer-events:none;width:120px;height:2px;background:linear-gradient(90deg,var(--amber),transparent);border-radius:2px;opacity:0;animation:shoot 4s linear infinite}
+.shooting-star:nth-child(1){top:15%;left:10%;animation-delay:0s;transform:rotate(-25deg)}
+.shooting-star:nth-child(2){top:35%;left:60%;animation-delay:2.5s;transform:rotate(-20deg);width:80px}
+.shooting-star:nth-child(3){top:65%;left:30%;animation-delay:5s;transform:rotate(-30deg);width:100px;background:linear-gradient(90deg,var(--fuchsia),transparent)}
+@keyframes shoot{0%{opacity:0;transform:translateX(0) rotate(-25deg)}5%{opacity:1}30%{opacity:0;transform:translateX(300px) rotate(-25deg)}100%{opacity:0}}
+
+/* ===== LAYOUT ===== */
+.top{background:rgba(6,3,18,.8);backdrop-filter:blur(12px);color:var(--text-primary);padding:8px 6vw;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid rgba(196,75,153,.1);position:relative;z-index:10}
+.top b{color:var(--amber)}
+header{position:absolute;z-index:10;top:32px;left:0;right:0;padding:18px 6vw;display:flex;align-items:center;justify-content:space-between;color:var(--text-primary)}
+.brand{display:block;width:230px}
+.brand img{display:block;width:100%;height:auto;filter:drop-shadow(0 5px 20px rgba(196,75,153,.3))}
+nav{display:flex;align-items:center;gap:28px;font-size:13px}
+nav a{opacity:.75;transition:opacity .25s,color .25s,text-shadow .25s}
+nav a:hover{color:var(--amber);opacity:1;text-shadow:0 0 12px rgba(219,159,52,.5)}
+.lang{border:1px solid rgba(240,234,248,.25);border-radius:99px;padding:8px 14px;background:rgba(240,234,248,.04);color:var(--text-primary);transition:all .25s}
+.lang:hover{border-color:var(--amber);background:rgba(219,159,52,.08);box-shadow:0 0 16px rgba(219,159,52,.2)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;padding:175px 10vw 110px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:5vw;position:relative;overflow:hidden;z-index:2}
+.hero:before{content:'';position:absolute;width:800px;height:800px;right:-250px;top:-200px;border:1px solid rgba(155,106,18,.2);border-radius:50%;box-shadow:0 0 0 100px rgba(74,16,62,.12),0 0 0 200px rgba(18,10,50,.1),0 0 120px rgba(196,75,153,.1)}
+.hero:after{content:'NEXO';position:absolute;right:-4vw;bottom:-.28em;font-size:32vw;font-weight:700;letter-spacing:-.1em;color:rgba(240,234,248,.015)}
+.hero>*{position:relative;z-index:1}
+.eyebrow,.label{color:var(--amber);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.hero h1{font-size:clamp(4rem,8vw,8.8rem);line-height:.95;letter-spacing:-.09em;max-width:780px;margin:24px 0 32px;text-wrap:balance}
+.hero h1 span{color:var(--amber);text-shadow:0 0 40px rgba(219,159,52,.3)}
+.lead{color:var(--text-secondary);max-width:49ch;font-size:1.1rem;line-height:1.85;margin:0 0 36px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:13px 22px;border-radius:99px;border:1px solid transparent;font-weight:600;transition:transform .25s var(--ease),background .25s var(--ease),box-shadow .35s var(--ease)}
+.btn:hover{transform:translateY(-3px)}
+.primary{background:var(--amber);color:var(--dark);box-shadow:0 4px 20px rgba(219,159,52,.3)}
+.primary:hover{background:#F2B23A;box-shadow:0 8px 40px rgba(219,159,52,.5)}
+.outline{border-color:rgba(240,234,248,.25);color:var(--text-primary);backdrop-filter:blur(4px)}
+.outline:hover{background:rgba(240,234,248,.08);border-color:var(--fuchsia);box-shadow:0 0 20px rgba(196,75,153,.25)}
+
+/* ===== ORBIT VISUAL ===== */
+.visual{min-height:500px;display:grid;place-items:center}
+.orbit-wrap{position:relative;width:min(38vw,460px);aspect-ratio:1}
+.orbit{width:100%;height:100%;border:1px solid rgba(240,234,248,.1);border-radius:50%;transform:rotate(-20deg);position:relative;animation:spin 28s linear infinite}
+.orbit:before{content:'';position:absolute;inset:13%;border:1px solid rgba(155,106,18,.4);border-radius:50% 42% 62% 38%;transform:rotate(40deg);box-shadow:0 0 30px rgba(155,106,18,.15)}
+.infinity{position:absolute;inset:20%;background:linear-gradient(135deg,var(--fuchsia),var(--wine));border-radius:48% 52% 35% 65%;transform:rotate(34deg);box-shadow:inset 22px -20px 0 rgba(6,3,18,.5),inset -10px 9px 0 rgba(219,159,52,.2),0 0 80px rgba(196,75,153,.4),0 0 160px rgba(74,16,62,.3);animation:float 6s ease-in-out infinite}
+.infinity:after{content:'';position:absolute;inset:25%;border-radius:50%;background:var(--dark);box-shadow:0 0 0 14px rgba(155,106,18,.15),0 0 40px rgba(6,3,18,.8)}
+/* Orbit ring particles */
+.orbit-particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber),0 0 16px rgba(219,159,52,.4)}
+.orbit-particle:nth-child(2){width:4px;height:4px;background:var(--fuchsia);box-shadow:0 0 6px var(--fuchsia)}
+.orbit-particle:nth-child(3){width:5px;height:5px;background:#e8dff8;box-shadow:0 0 6px #e8dff8}
+.visual small{position:absolute;right:3%;bottom:3%;color:var(--amber);letter-spacing:.16em;text-transform:uppercase;text-shadow:0 0 10px rgba(219,159,52,.3)}
+@keyframes spin{to{transform:rotate(340deg)}}
+@keyframes float{50%{transform:rotate(42deg) translateY(-15px)}}
+
+/* ===== TICKER ===== */
+.ticker{background:linear-gradient(90deg,var(--wine),var(--fuchsia),var(--wine));color:var(--text-primary);padding:14px;white-space:nowrap;overflow:hidden;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;position:relative;z-index:2;box-shadow:0 0 40px rgba(196,75,153,.2)}
+.ticker span{display:inline-block;animation:slide 28s linear infinite}
+.ticker i{color:var(--amber);font-style:normal;padding:0 22px;text-shadow:0 0 8px rgba(219,159,52,.5)}
+@keyframes slide{to{transform:translateX(-40%)}}
+
+/* ===== SECTIONS ===== */
+section{padding:128px 8vw;position:relative;z-index:2}
+.head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:60px}
+.head p{max-width:38ch;color:var(--text-secondary);line-height:1.85}
+.label{color:var(--fuchsia);margin:0 0 14px}
+.head h2{font-size:clamp(2.8rem,5vw,5.8rem);line-height:1.02;letter-spacing:-.08em;max-width:10ch}
+
+/* ===== SERVICES ===== */
+.services{background:rgba(10,6,32,.6);backdrop-filter:blur(2px)}
+.service{display:grid;grid-template-columns:70px 1fr 100px;gap:20px;padding:30px 0;border-top:1px solid var(--line);transition:.35s var(--ease)}
+.service:last-child{border-bottom:1px solid var(--line)}
+.service:hover{padding-inline:24px;background:rgba(22,16,56,.8);border-radius:12px;box-shadow:0 0 30px rgba(196,75,153,.08)}
+.service b{color:var(--amber);text-shadow:0 0 8px rgba(219,159,52,.3)}
+.service h3{margin:0 0 8px;font-size:1.5rem}
+.service p{margin:0;color:var(--text-muted);max-width:58ch;line-height:1.8}
+.service:hover p{color:var(--text-secondary)}
+.tag{text-align:right;color:var(--fuchsia);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.service:hover .tag{color:var(--amber)}
+
+/* ===== WORK ===== */
+.work{background:transparent}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+.project{min-height:510px;padding:30px;display:flex;flex-direction:column;justify-content:space-between;color:var(--text-primary);position:relative;overflow:hidden;border-radius:16px;transition:box-shadow .4s var(--ease)}
+.project:before{content:'';position:absolute;inset:20% 8% -25% 35%;border:1px solid currentColor;border-radius:50%;opacity:.2;transform:rotate(-28deg);transition:transform .5s var(--ease)}
+.project:hover:before{transform:rotate(-8deg) scale(1.08)}
+.project:hover{box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.one{background:linear-gradient(135deg,rgba(74,16,62,.9),rgba(196,75,153,.3));border:1px solid rgba(196,75,153,.15)}
+.two{background:linear-gradient(135deg,rgba(18,10,50,.95),rgba(88,40,180,.2));min-height:244px;border:1px solid rgba(88,40,180,.15)}
+.three{background:linear-gradient(135deg,rgba(219,159,52,.85),rgba(155,106,18,.9));color:var(--dark);min-height:244px;border:1px solid rgba(219,159,52,.3)}
+.side{display:grid;gap:22px}
+.project h3{position:relative;font-size:clamp(2rem,4vw,4.3rem);line-height:1.02;letter-spacing:-.08em;max-width:8ch;margin:18px 0}
+.project small{position:relative;letter-spacing:.15em;text-transform:uppercase;opacity:.7}
+.foot{position:relative;display:flex;justify-content:space-between;align-items:end;font-size:13px}
+.arrow{border:1px solid currentColor;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;transition:all .3s var(--ease)}
+.project:hover .arrow{background:var(--amber);color:var(--dark);border-color:var(--amber);box-shadow:0 0 16px rgba(219,159,52,.4)}
+
+/* ===== STORY ===== */
+.story{background:var(--surface-2)}
+.story .label{color:var(--amber)}
+.story .head p{color:var(--text-secondary)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(240,234,248,.08)}
+.step{padding:30px 24px 0 0;border-right:1px solid rgba(240,234,248,.08);min-height:190px}
+.step+.step{padding-left:24px}
+.step:last-child{border:0}
+.step b{color:var(--amber);font-size:2rem;text-shadow:0 0 12px rgba(219,159,52,.3)}
+.step h3{margin:26px 0 8px}
+.step p{color:var(--text-secondary);max-width:22ch;line-height:1.8}
+
+/* ===== LOCATION ===== */
+.location{background:transparent;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.location h2{font-size:clamp(3rem,6vw,6.5rem);line-height:1;letter-spacing:-.09em;max-width:7ch}
+.location p{color:var(--text-secondary);max-width:45ch;line-height:1.9}
+.map{height:350px;border:1px solid var(--line);border-radius:18px;position:relative;background:var(--surface);background-image:linear-gradient(rgba(196,75,153,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(196,75,153,.05) 1px,transparent 1px);background-size:40px 40px;overflow:hidden}
+.map:before,.map:after{content:'';position:absolute;inset:18% 20%;border:1px solid rgba(74,16,62,.3);border-radius:50%;transform:rotate(24deg)}
+.map:after{inset:35% 15%;border-color:rgba(155,106,18,.3);transform:rotate(-18deg)}
+.pin{position:absolute;z-index:1;left:51%;top:45%;width:22px;height:22px;background:var(--fuchsia);border:5px solid var(--surface-3);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 20px rgba(196,75,153,.6),0 0 40px rgba(196,75,153,.3);animation:pulse-pin 2s ease-in-out infinite}
+.map label{position:absolute;left:55%;top:53%;color:var(--text-primary);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+@keyframes pulse-pin{0%,100%{box-shadow:0 0 20px rgba(196,75,153,.6),0 0 40px rgba(196,75,153,.3)}50%{box-shadow:0 0 30px rgba(196,75,153,.8),0 0 60px rgba(196,75,153,.4)}}
+
+/* ===== CONTACT ===== */
+.contact{background:rgba(10,6,32,.4);padding-top:0}
+.contact-box{background:rgba(14,9,40,.8);border:1px solid rgba(196,75,153,.12);border-radius:16px;padding:60px;display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;backdrop-filter:blur(8px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.contact-box .label{color:var(--amber)}
+.contact-box h2{font-size:clamp(2.8rem,5vw,5rem);line-height:1.05}
+.contact-box p{color:var(--text-secondary);line-height:1.9}
+.form{display:grid;gap:18px}
+.form input,.form textarea{background:transparent;border:0;border-bottom:1px solid rgba(240,234,248,.15);padding:14px 0;color:var(--text-primary);outline:0;transition:border-color .25s,box-shadow .25s}
+.form input:focus,.form textarea:focus{border-color:var(--amber);box-shadow:0 4px 12px rgba(219,159,52,.1)}
+.form input::placeholder,.form textarea::placeholder{color:var(--text-muted)}
+.form textarea{min-height:90px;resize:vertical}
+.form .btn{justify-self:start}
+
+footer{background:rgba(6,3,18,.9);color:var(--text-secondary);border-top:1px solid rgba(196,75,153,.1);padding:24px 8vw;display:flex;justify-content:space-between;font-size:12px;position:relative;z-index:2}
+footer b{color:var(--amber)}
+
+/* ===== ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:.8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== GLOW CURSOR FOLLOWER ===== */
+.cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(196,75,153,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .3s ease-out,top .3s ease-out}
+
+/* ===== RTL / AR ===== */
+body.ar .head h2,body.ar .hero h1,body.ar .project h3,body.ar .location h2{letter-spacing:-.03em}
+body.ar .tag{text-align:left}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:850px){
+  nav a{display:none}
+  .hero{grid-template-columns:1fr;padding:155px 7vw 90px}
+  .visual{min-height:380px}
+  .orbit-wrap{width:min(74vw,430px)}
+  section{padding:96px 7vw}
+  .head{display:block}
+  .head>p{margin-top:28px}
+  .grid,.location,.contact-box{grid-template-columns:1fr}
+  .contact-box{padding:36px}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .step:nth-child(3){border-top:1px solid rgba(240,234,248,.08);padding-left:0}
+  .step:nth-child(4){border-top:1px solid rgba(240,234,248,.08);border-right:0}
+  footer{display:block}
+  footer span{display:block;margin:5px 0}
+  .cursor-glow{display:none}
+}
+@media(max-width:540px){
+  .top{padding-inline:18px;font-size:9px}
+  .top span:last-child{display:none}
+  header{padding:16px 18px;top:28px}
+  .brand{width:176px}
+  .hero{padding:150px 20px 80px;min-height:auto}
+  .hero h1{font-size:4.1rem;line-height:1.04}
+  .lead{font-size:1rem;line-height:1.9}
+  .service{grid-template-columns:38px 1fr;gap:10px}
+  .tag{text-align:left;grid-column:2}
+  .project{min-height:390px!important}
+  .steps{display:block}
+  .step,.step+.step{border-right:0;border-bottom:1px solid rgba(240,234,248,.08);padding:24px 0;min-height:auto}
+  .map{height:280px}
+  .contact-box{padding:30px 22px}
+  body.ar .hero h1{font-size:3.35rem;line-height:1.25}
+  body.ar .head h2{font-size:2.65rem;line-height:1.35}
+  body.ar .project h3{font-size:2.2rem;line-height:1.3}
+  body.ar .service h3{font-size:1.25rem;line-height:1.7}
+  body.ar .service p,body.ar .step p,body.ar .head>p{line-height:2}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto}#galaxy-canvas,.sparkles,.shooting-star,.nebula,.cursor-glow{display:none!important}}
+</style></head><body>
+
+<!-- Galaxy star field canvas -->
+<canvas id="galaxy-canvas"></canvas>
+
+<!-- Nebula glow blobs -->
+<div class="nebula">
+  <div class="nebula-blob nb-1"></div>
+  <div class="nebula-blob nb-2"></div>
+  <div class="nebula-blob nb-3"></div>
+  <div class="nebula-blob nb-4"></div>
+</div>
+
+<!-- CSS Sparkle particles -->
+<div class="sparkles" id="sparkles"></div>
+
+<!-- Shooting stars -->
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+
+<!-- Cursor glow follower -->
+<div class="cursor-glow" id="cursor-glow"></div>
+
+<div class="top"><span><b>NEXO</b> / Technology & Design</span><span>Jericho, Palestine</span></div>
+<header>
+  <a class="brand" href="#home" aria-label="Nexo home"><img src="https://i.ibb.co/jkqSgNHp/Untitled-design-20260721-231159-0000.png" alt="NEXO Technology and Design logo"></a>
+  <nav>
+    <a href="#services" data-en="Services" data-ar="الخدمات">Services</a>
+    <a href="#work" data-en="Work" data-ar="أعمالنا">Work</a>
+    <a href="#story" data-en="Process" data-ar="منهجيتنا">Process</a>
+    <a href="#contact" data-en="Start a project" data-ar="ابدأ مشروعك">Start a project ↗</a>
+    <button class="lang" id="lang">العربية</button>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="reveal">
+    <p class="eyebrow" data-en="Independent digital studio / Jericho + everywhere" data-ar="استوديو رقمي مستقل / أريحا + كل مكان">Independent digital studio / Jericho + everywhere</p>
+    <h1 data-en="Ideas that move. <span>Brands that stay.</span>" data-ar="أفكار تتحرك. <span>علامات تبقى.</span>">Ideas that move. <span>Brands that stay.</span></h1>
+    <p class="lead" data-en="Nexo builds websites, identities, social systems and digital experiences for ambitious businesses and unforgettable moments." data-ar="Nexo يبني المواقع والهويات وأنظمة التواصل والتجارب الرقمية للشركات الطموحة واللحظات التي لا تُنسى.">Nexo builds websites, identities, social systems and digital experiences for ambitious businesses and unforgettable moments.</p>
+    <div class="actions">
+      <a class="btn primary" href="#work" data-en="Explore the portal ↗" data-ar="استكشف البورتال ↗">Explore the portal ↗</a>
+      <a class="btn outline" href="#contact" data-en="Start a conversation" data-ar="ابدأ محادثة">Start a conversation</a>
+    </div>
+  </div>
+  <div class="visual reveal">
+    <div class="orbit-wrap">
+      <div class="orbit">
+        <div class="infinity"></div>
+        <div class="orbit-particle" style="top:5%;left:48%"></div>
+        <div class="orbit-particle" style="top:50%;right:2%"></div>
+        <div class="orbit-particle" style="bottom:8%;left:30%"></div>
+      </div>
+    </div>
+    <small data-en="Connection / Flow / Growth" data-ar="اتصال / تدفق / نمو">Connection / Flow / Growth</small>
+  </div>
+</section>
+
+<div class="ticker"><span>Websites <i>✦</i> Branding <i>✦</i> Social media <i>✦</i> Automation <i>✦</i> Wedding stories <i>✦</i> Websites <i>✦</i> Branding <i>✦</i> Social media <i>✦</i> Automation <i>✦</i></span></div>
+
+<section class="services" id="services">
+  <div class="head reveal">
+    <div>
+      <p class="label" data-en="The Nexo stack" data-ar="منظومة Nexo">The Nexo stack</p>
+      <h2 data-en="Everything your next version needs." data-ar="كل ما تحتاجه نسختك القادمة.">Everything your next version needs.</h2>
+    </div>
+    <p data-en="One sharp studio instead of five disconnected suppliers. We connect the idea, the look and the system behind it." data-ar="استوديو واحد متكامل بدل خمسة مزودين منفصلين. نربط الفكرة بالشكل والنظام الذي يقف خلفهما.">One sharp studio instead of five disconnected suppliers. We connect the idea, the look and the system behind it.</p>
+  </div>
+  <div>
+    <article class="service reveal"><b>01</b><div><h3 data-en="Websites & portals" data-ar="المواقع والبورتالات">Websites & portals</h3><p data-en="High-conviction websites and portfolio portals for companies, founders and projects." data-ar="مواقع وبورتالات احترافية للشركات وأصحاب المشاريع.">High-conviction websites and portfolio portals for companies, founders and projects.</p></div><span class="tag" data-en="Digital" data-ar="رقمي">Digital</span></article>
+    <article class="service reveal"><b>02</b><div><h3 data-en="Branding & visual identity" data-ar="الهوية والعلامة التجارية">Branding & visual identity</h3><p data-en="A recognizable visual language across your logo, campaigns and social presence." data-ar="لغة بصرية متكاملة عبر الشعار والحملات ووسائل التواصل.">A recognizable visual language across your logo, campaigns and social presence.</p></div><span class="tag" data-en="Identity" data-ar="هوية">Identity</span></article>
+    <article class="service reveal"><b>03</b><div><h3 data-en="Social media management" data-ar="إدارة وسائل التواصل">Social media management</h3><p data-en="Strategy, content direction and design that turn attention into trust." data-ar="استراتيجية ومحتوى وتصميم يحول الانتباه إلى ثقة.">Strategy, content direction and design that turn attention into trust.</p></div><span class="tag" data-en="Content" data-ar="محتوى">Content</span></article>
+    <article class="service reveal"><b>04</b><div><h3 data-en="Systems & automation" data-ar="الأنظمة والأتمتة">Systems & automation</h3><p data-en="Smart workflows for lead capture, client onboarding and daily operations." data-ar="أنظمة ذكية لاستقبال العملاء وإدارة العمليات اليومية.">Smart workflows for lead capture, client onboarding and daily operations.</p></div><span class="tag" data-en="Systems" data-ar="أنظمة">Systems</span></article>
+    <article class="service reveal"><b>05</b><div><h3 data-en="Design & wedding stories" data-ar="التصميم وقصص الأعراس">Design & wedding stories</h3><p data-en="Wedding cards, invitation suites and mapping animations made personal." data-ar="بطاقات ودعوات وأنيميشن خرائط للزفاف بشكل شخصي.">Wedding cards, invitation suites and mapping animations made personal.</p></div><span class="tag" data-en="Moments" data-ar="لحظات">Moments</span></article>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="head reveal">
+    <div>
+      <p class="label" data-en="The workroom" data-ar="غرفة الأعمال">The workroom</p>
+      <h2 data-en="Proof over promises." data-ar="النتيجة قبل الكلام.">Proof over promises.</h2>
+    </div>
+    <p data-en="A living portfolio built to grow with every launch." data-ar="بورتفوليو حي يكبر مع كل إطلاق.">A living portfolio built to grow with every launch.</p>
+  </div>
+  <div class="grid">
+    <article class="project one reveal">
+      <div><small>Brand world / 01</small><h3 data-en="Make the room remember you." data-ar="خلّي المكان يتذكرك.">Make the room remember you.</h3></div>
+      <div class="foot"><span data-en="Identity, launch site, social toolkit" data-ar="هوية، موقع إطلاق، أدوات التواصل">Identity, launch site, social toolkit</span><span class="arrow">↗</span></div>
+    </article>
+    <div class="side">
+      <article class="project two reveal">
+        <div><small>Digital / 02</small><h3 data-en="Built to be found." data-ar="مصمم ليُكتشف.">Built to be found.</h3></div>
+        <div class="foot"><span data-en="Business website & conversion flow" data-ar="موقع أعمال ومسار تحويل">Business website & conversion flow</span><span class="arrow">↗</span></div>
+      </article>
+      <article class="project three reveal">
+        <div><small>Celebration / 03</small><h3 data-en="For the moments that stay." data-ar="للحظات التي تبقى.">For the moments that stay.</h3></div>
+        <div class="foot"><span data-en="Wedding suite & mapping animation" data-ar="دعوة زفاف وأنيميشن خريطة">Wedding suite & mapping animation</span><span class="arrow">↗</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="head reveal">
+    <div>
+      <p class="label" data-en="The Nexo method" data-ar="منهجية Nexo">The Nexo method</p>
+      <h2 data-en="A clear path to uncommon work." data-ar="طريق واضح لنتيجة غير عادية.">A clear path to uncommon work.</h2>
+    </div>
+    <p data-en="Visible, collaborative and calm. Four honest steps from first call to final launch." data-ar="واضح وتعاوني وهادئ. أربع خطوات صادقة من أول مكالمة حتى الإطلاق.">Visible, collaborative and calm. Four honest steps from first call to final launch.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal"><b>01</b><h3 data-en="Discovery" data-ar="اكتشاف">Discovery</h3><p data-en="We listen, map your world, and shape a brief that moves." data-ar="نستمع، نرسم خريطتك، ونبني ملخصاً يتحرك.">We listen, map your world, and shape a brief that moves.</p></div>
+    <div class="step reveal"><b>02</b><h3 data-en="Direction" data-ar="اتجاه">Direction</h3><p data-en="Visual strategy and moodboards before any pixel work." data-ar="استراتيجية بصرية ومودبوردات قبل أي تصميم.">Visual strategy and moodboards before any pixel work.</p></div>
+    <div class="step reveal"><b>03</b><h3 data-en="Build" data-ar="بناء">Build</h3><p data-en="Design, code, and content in tight, visible sprints." data-ar="تصميم وكود ومحتوى في سبرنتات واضحة ومركزة.">Design, code, and content in tight, visible sprints.</p></div>
+    <div class="step reveal"><b>04</b><h3 data-en="Launch" data-ar="إطلاق">Launch</h3><p data-en="Go live with confidence. Handoff, training, and 30-day support." data-ar="انطلق بثقة. تسليم وتدريب ودعم لـ30 يوم.">Go live with confidence. Handoff, training, and 30-day support.</p></div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="reveal">
+    <p class="label" data-en="Based in Palestine" data-ar="من فلسطين">Based in Palestine</p>
+    <h2 data-en="Jericho to everywhere." data-ar="من أريحا للعالم.">Jericho to everywhere.</h2>
+    <p data-en="Remote-first, timezone-flexible. We show up where the work needs us." data-ar="عمل عن بعد، مرونة بالتوقيت. نكون حيث يحتاجنا العمل.">Remote-first, timezone-flexible. We show up where the work needs us.</p>
+  </div>
+  <div class="map reveal">
+    <div class="pin"></div>
+    <label>Jericho</label>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-box reveal">
+    <div>
+      <p class="label" data-en="Start something" data-ar="ابدأ شيئاً">Start something</p>
+      <h2 data-en="Let's talk." data-ar="خلينا نحكي.">Let's talk.</h2>
+      <p data-en="Tell us what you're building. We'll tell you how we can help." data-ar="احكيلنا شو عم تبني. ونحنا بنحكيلك كيف بنقدر نساعد.">Tell us what you're building. We'll tell you how we can help.</p>
+    </div>
+    <form class="form" onsubmit="return false">
+      <input type="text" placeholder="Your name" data-ph-en="Your name" data-ph-ar="اسمك">
+      <input type="email" placeholder="Email" data-ph-en="Email" data-ph-ar="الإيميل">
+      <textarea placeholder="Tell us about your project..." data-ph-en="Tell us about your project..." data-ph-ar="احكيلنا عن مشروعك..."></textarea>
+      <button class="btn primary" data-en="Send it ↗" data-ar="أرسل ↗">Send it ↗</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>© 2025 <b>NEXO</b></span>
+  <span data-en="Technology & Design / Jericho, Palestine" data-ar="تكنولوجيا وتصميم / أريحا، فلسطين">Technology & Design / Jericho, Palestine</span>
+</footer>
+
+<script>
+// ===== GALAXY STAR FIELD =====
+(function(){
+  var canvas=document.getElementById('galaxy-canvas');
+  var ctx=canvas.getContext('2d');
+  var stars=[];
+  var count=220;
+
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+  window.addEventListener('resize',resize);
+  resize();
+
+  var colors=['rgba(219,159,52,','rgba(196,75,153,','rgba(232,223,248,','rgba(140,58,112,'];
+
+  for(var i=0;i<count;i++){
+    stars.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*1.8+.3,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      speed:Math.random()*.0008+.0003,
+      phase:Math.random()*Math.PI*2,
+      drift:Math.random()*.15-.075
+    });
+  }
+
+  function draw(t){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      var opacity=.3+.7*(.5+.5*Math.sin(t*s.speed+s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=s.color+opacity+')';
+      ctx.fill();
+      // subtle glow for larger stars
+      if(s.r>1.2){
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2);
+        ctx.fillStyle=s.color+(opacity*.2)+')';
+        ctx.fill();
+      }
+      s.y+=s.drift*.3;
+      if(s.y>canvas.height+5){s.y=-5;s.x=Math.random()*canvas.width}
+      if(s.y<-5){s.y=canvas.height+5;s.x=Math.random()*canvas.width}
+    }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// ===== CSS SPARKLE PARTICLES =====
+(function(){
+  var container=document.getElementById('sparkles');
+  var types=['gold','pink','white'];
+  for(var i=0;i<45;i++){
+    var s=document.createElement('div');
+    s.className='sparkle '+types[Math.floor(Math.random()*types.length)];
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.setProperty('--dur',(2+Math.random()*4)+'s');
+    s.style.setProperty('--delay',(Math.random()*5)+'s');
+    var size=Math.random()*3+1;
+    s.style.width=size+'px';
+    s.style.height=size+'px';
+    container.appendChild(s);
+  }
+})();
+
+// ===== CURSOR GLOW =====
+(function(){
+  var glow=document.getElementById('cursor-glow');
+  if(!matchMedia('(hover:hover)').matches)return;
+  document.addEventListener('mousemove',function(e){
+    glow.style.left=e.clientX+'px';
+    glow.style.top=e.clientY+'px';
+  });
+})();
+
+// ===== REVEAL ON SCROLL =====
+var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+
+// ===== LANGUAGE TOGGLE =====
+var langBtn=document.getElementById('lang');
+var isAr=false;
+langBtn.addEventListener('click',function(){
+  isAr=!isAr;
+  document.body.classList.toggle('ar',isAr);
+  document.documentElement.dir=isAr?'rtl':'ltr';
+  document.documentElement.lang=isAr?'ar':'en';
+  langBtn.textContent=isAr?'English':'العربية';
+  document.querySelectorAll('[data-ar]').forEach(function(el){
+    el.innerHTML=isAr?el.dataset.ar:el.dataset.en;
+  });
+  document.querySelectorAll('[data-ph-ar]').forEach(function(el){
+    el.placeholder=isAr?el.dataset.phAr:el.dataset.phEn;
+  });
+});
+</script>
+</body></html>
